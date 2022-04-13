@@ -18,9 +18,14 @@ imagemTesoura.src = "./tesoura.png";
 const imagemPapel = new Image();
 imagemPapel.src = "./papel.png";
 let gameOver = false;
+const quantidadesAtuais = {
+  pedra: 0,
+  papel: 0,
+  tesoura: 0
+};
 
 let listParticles = [];
-const numberOfParticles = 100;
+const numberOfParticles = 1000;
 
 const createGameParticle = (arr) => {
   let angle = Math.floor(Math.random() * 360);
@@ -31,8 +36,8 @@ const createGameParticle = (arr) => {
     width: 1 * scale,
     x: Math.floor(Math.random() * (width - scale)),
     y: Math.floor(Math.random() * (height - scale)),
-    xSpeed: (scale / 3) * Math.cos(angle),
-    ySpeed: (scale / 3) * Math.sin(angle),
+    xSpeed: (scale / 7) * Math.cos(angle),
+    ySpeed: (scale / 7) * Math.sin(angle),
     update: () => {
       gameParticle.x += gameParticle.xSpeed;
       gameParticle.y += gameParticle.ySpeed;
@@ -76,6 +81,11 @@ const particleCollision = () => {
         aux = listParticles[i].ySpeed;
         listParticles[i].ySpeed = listParticles[j].ySpeed;
         listParticles[j].ySpeed = aux;
+
+        //listParticles[i].x+=listParticles[i].xSpeed/2
+        //listParticles[i].y+=listParticles[i].ySpeed/2
+        //listParticles[j].x+=listParticles[j].xSpeed/2
+        //listParticles[j].y+=listParticles[j].ySpeed/2
 
         if (
           (listParticles[i].type == "rock" &&
@@ -157,6 +167,18 @@ function draw() {
 requestAnimationFrame(draw);
 const generateNewFrame = () => {
   particleLogic();
+  listParticles.map((particle) => {
+    if (particle.type == "rock") quantidadesAtuais.pedra++;
+    else if (particle.type == "scissors") quantidadesAtuais.tesoura++;
+    else quantidadesAtuais.papel++;
+  });
+
+  console.log(
+    `Pedra: ${quantidadesAtuais.pedra} Papel: ${quantidadesAtuais.papel} Tesoura: ${quantidadesAtuais.tesoura}`
+  );
+  quantidadesAtuais.papel = 0;
+  quantidadesAtuais.pedra = 0;
+  quantidadesAtuais.tesoura = 0;
   if (gameOver === true) {
     const winnerType = listParticles[0].type;
     listParticles = [];
@@ -170,6 +192,6 @@ const generateNewFrame = () => {
 };
 const main = () => {
   start();
-  setInterval(generateNewFrame, 50);
+  setInterval(generateNewFrame, 150);
 };
 main();
