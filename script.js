@@ -14,7 +14,7 @@ screen.style.border = "3px solid grey";
 const particleType = ['rock','paper','scissors']
 
 let listParticles = [];
-const numberOfParticles = 50;
+const numberOfParticles = 20;
 
 const createGameParticle = (arr) => {
 	
@@ -22,8 +22,8 @@ const createGameParticle = (arr) => {
 	
 	const gameParticle = {
 		type: particleType[Math.floor(Math.random() * 3)],
-		height: 1 * scale/2,
-		width: 1*scale/2,
+		height: 1 * scale,
+		width: 1*scale,
 		x: Math.floor(Math.random() * (width - scale)) ,
 		y: Math.floor(Math.random() *(height - scale)),
 		xSpeed: (scale/3)*Math.cos(angle),
@@ -55,10 +55,10 @@ const start = () =>{
 		createGameParticle(listParticles)
 }
 const particleCollision = () =>{;
-	for(particle1 in listParticles){
-		for(particle2 in listParticles){
-			if(Math.abs(particle2.x - particle1.x) <= particle2.width &&
-			   Math.abs(particle2.y - particle1.y) <= particle2.height
+	for(let i = 0; i < listParticles.length; i++){
+		for(let j = i+1; j < listParticles.length; j++){
+			if(Math.abs(listParticles[j].x - listParticles[i].x) <= listParticles[j].width &&
+			   Math.abs(listParticles[j].y - listParticles[i].y) <= listParticles[j].height
 			){
 				console.log('hit')
 			}
