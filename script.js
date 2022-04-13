@@ -17,9 +17,10 @@ const imagemTesoura = new Image();
 imagemTesoura.src = "./tesoura.png";
 const imagemPapel = new Image();
 imagemPapel.src = "./papel.png";
+let gameOver = false;
 
 let listParticles = [];
-const numberOfParticles = 50;
+const numberOfParticles = 100;
 
 const createGameParticle = (arr) => {
   let angle = Math.floor(Math.random() * 360);
@@ -38,12 +39,16 @@ const createGameParticle = (arr) => {
 
       if (gameParticle.x >= width - gameParticle.width) {
         gameParticle.xSpeed = -gameParticle.xSpeed;
+        gameParticle.x -= scale;
       } else if (gameParticle.x <= 0) {
         gameParticle.xSpeed = -gameParticle.xSpeed;
+        gameParticle.x += scale;
       } else if (gameParticle.y >= height - gameParticle.height) {
         gameParticle.ySpeed = -gameParticle.ySpeed;
+        gameParticle.y -= scale;
       } else if (gameParticle.y <= 0) {
         gameParticle.ySpeed = -gameParticle.ySpeed;
+        gameParticle.y += scale;
       }
     }
   };
@@ -52,6 +57,7 @@ const createGameParticle = (arr) => {
 };
 const start = () => {
   for (let i = 0; i < numberOfParticles; i++) createGameParticle(listParticles);
+  gameOver = false;
 };
 const particleCollision = () => {
   for (let i = 0; i < listParticles.length; i++) {
@@ -105,6 +111,13 @@ const particleLogic = () => {
     listParticles[i].update();
   }
   particleCollision();
+  gameOver = true;
+  for (let i = 0; i < listParticles.length; i++) {
+    if (listParticles[i].type != listParticles[0].type) {
+      gameOver = false;
+      return false;
+    }
+  }
 };
 
 const renderGameParticles = () => {
@@ -144,6 +157,16 @@ function draw() {
 requestAnimationFrame(draw);
 const generateNewFrame = () => {
   particleLogic();
+  if (gameOver === true) {
+    const winnerType = listParticles[0].type;
+    listParticles = [];
+    const reloadAfterGameOver = window.confirm(
+      `The game has ended in ${winnerType}. The page will reload regardless of your choice`
+    );
+    if (reloadAfterGameOver == true || reloadAfterGameOver == false) {
+      window.location.reload();
+    }
+  }
 };
 const main = () => {
   start();
