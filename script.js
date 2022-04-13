@@ -12,14 +12,14 @@ screen.style.border = "3px solid grey";
 
 const particleType = ["rock", "paper", "scissors"];
 const imagemPedra = new Image();
-imagemPedra.src("./pedra.png");
+imagemPedra.src = "./pedra.png";
 const imagemTesoura = new Image();
-imagemPedra.src("./tesoura.png");
+imagemTesoura.src = "./tesoura.png";
 const imagemPapel = new Image();
-imagemPedra.src("./papel.png");
+imagemPapel.src = "./papel.png";
 
 let listParticles = [];
-const numberOfParticles = 25;
+const numberOfParticles = 50;
 
 const createGameParticle = (arr) => {
   let angle = Math.floor(Math.random() * 360);
@@ -127,14 +127,14 @@ const renderGameParticles = () => {
         particle.width,
         particle.height
       );
-    else ctx.fillStyle = "green";
-    ctx.drawImage(
-      imagemPapel,
-      particle.x,
-      particle.y,
-      particle.width,
-      particle.height
-    );
+    else
+      ctx.drawImage(
+        imagemPapel,
+        particle.x,
+        particle.y,
+        particle.width,
+        particle.height
+      );
   });
 };
 function draw() {
