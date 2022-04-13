@@ -14,7 +14,7 @@ screen.style.border = "3px solid grey";
 const particleType = ['rock','paper','scissors']
 
 let listParticles = [];
-const numberOfParticles = 10;
+const numberOfParticles = 25;
 
 const createGameParticle = (arr) => {
 	
@@ -68,6 +68,24 @@ const particleCollision = () =>{;
 				aux = listParticles[i].ySpeed
 				listParticles[i].ySpeed = listParticles[j].ySpeed
 				listParticles[j].ySpeed = aux
+				
+				if((listParticles[i].type == 'rock' && listParticles[j].type == 'paper') ||
+					(listParticles[i].type == 'paper' && listParticles[j].type == 'rock')
+				){
+					listParticles[i].type = 'paper'
+					listParticles[j].type = 'paper'
+				} else if((listParticles[i].type == 'scissors' && listParticles[j].type == 'paper') ||
+					(listParticles[i].type == 'paper' && listParticles[j].type == 'scissors')
+				){
+					listParticles[i].type = 'scissors'
+					listParticles[j].type = 'scissors'
+				} else if((listParticles[i].type == 'scissors' && listParticles[j].type == 'rock') ||
+					(listParticles[i].type == 'rock' && listParticles[j].type == 'scissors')
+				){
+					listParticles[i].type = 'rock'
+					listParticles[j].type = 'rock'
+				}
+				
 			}
 		}
 	}
