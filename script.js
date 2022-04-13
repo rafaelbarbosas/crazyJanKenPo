@@ -17,14 +17,17 @@ let listParticles = [];
 const numberOfParticles = 50;
 
 const createGameParticle = (arr) => {
+	
+	let angle = Math.floor(Math.random()*360)
+	
 	const gameParticle = {
 		type: particleType[Math.floor(Math.random() * 3)],
 		height: 1 * scale/2,
 		width: 1*scale/2,
 		x: Math.floor(Math.random() * (width - scale)) ,
 		y: Math.floor(Math.random() *(height - scale)),
-		xSpeed: (scale/3)*(Math.random()*2 - 1),
-		ySpeed: (scale/3)*(Math.random()*2 - 1),
+		xSpeed: (scale/3)*Math.cos(angle),
+		ySpeed: (scale/3)*Math.sin(angle),
 		update: () =>{
 			
 			gameParticle.x += gameParticle.xSpeed
